@@ -14,4 +14,4 @@ In the config.js file add the smart contract address and the ABI
 ![image](https://github.com/user-attachments/assets/dacd33c7-9de2-4db7-bf49-456806f12d90)
 
 #### Step 3)
-Run the website, create accoutns and add friends and message 
+Run the website, create accounts and add friends and message 
