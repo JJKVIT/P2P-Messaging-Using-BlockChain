@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 25%;
+            background: #fbfafd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #eeedf2;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .add-friend {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .add-friend input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #f5f7fa;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .add-friend input:focus {
+            background-color: #eef1f6;
+            box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2);
+        }
+
+        .add-friend button {
+            padding: 12px 15px;
+            border: none;
+            background: #8a2be2;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .add-friend button:hover {
+            background: #7b28c7;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .contacts {
+            margin-top: 10px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .contact {
+            padding: 15px;
+            background: #fbfafd;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact.active {
+            background: #f0e6ff;
+            border-left: 3px solid #8a2be2;
+        }
+
+        .chat-window {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fbfafd;
+            position: relative;
+            border-radius: 15px;
+            margin: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #8a2be2;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info button {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-info button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-messages {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f5f6fa;
+            max-height: calc(100vh - 140px);
+        }
+
+        .sent, .received {
+            max-width: 60%;
+            padding: 12px 15px;
+            border-radius: 15px;
+            word-wrap: break-word;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .sent {
+            background-color: #8a2be2;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .received {
+            background-color: #f0f2f5;
+            color: #333;
+            align-self: flex-start;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .timestamp {
+            font-size: 11px;
+            margin-top: 5px;
+            opacity: 0.8;
+            align-self: flex-end;
+        }
+
+        .sent .timestamp {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .received .timestamp {
+            color: #999;
+        }
+
+        .chat-input {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background: #fbfafd;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-input textarea {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            resize: none;
+            min-height: 45px;
+            max-height: 150px;
+            overflow-y: auto;
+            line-height: 1.5;
+            vertical-align: middle;
+            background-color: #f5f7fa;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input textarea:focus {
+            background-color: #eef1f6;
+            box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2);
+        }
+
+        .chat-input button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: #8a2be2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: #7b28c7;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .uIcon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #dcdbe0;
+            }
+            
+            .chat-window {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .chat-messages {
+                max-height: calc(100vh - 350px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="add-friend">
+                <input type="text" placeholder="Enter User Address" class="address-input">
+                <button onclick=addFriend()>Add</button>
+            </div>
+            <div class="contacts"></div>
+        </aside>
+        <main class="chat-window">
+            <header class="chat-header">
+                <span>Chat</span>
+                <div class="user-info">
+                    <img src="user-icon.svg" alt="User" class="uIcon">
+                    <span id="username">Username</span>
+                    <button onclick=logout()>Logout</button>
+                </div>
+            </header>
+            <div class="chat-messages"></div>
+            <footer class="chat-input">
+                <textarea placeholder="Type a message" class="message-input"></textarea>
+                <button onclick=sendMsg()>Send</button>
+            </footer>
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js"
+    integrity="sha512-oMd9Re3VgJcXuZJn9DN6X7S7JUc7xLYZ2UyZ85Mm/xzaW3lwBr4fV2zjuu/n5jY/Of/2JOx35CTa6zvQNxb31Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="config.js"></script> 
+    <script src="internal.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #f5f5f5;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        #left {
+            flex: 1;
+            height: 95vh;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        #left:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        #img {
+            height: 100%;
+            width: 100%;
+        }
+        
+        #imgs {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        #right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        #login-card {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            background-color: white;
+        }
+        
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        h2 {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #f5f7fa;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .form-control:focus {
+            background-color: #eef1f6;
+            box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+        }
+        
+        .form-control::placeholder {
+            color: #aaa;
+        }
+        
+        #button {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: #8a2be2;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #button:hover {
+            background: #7b28c7;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+        
+        #button:active {
+            transform: translateY(0);
+        }
+        
+        .signup-link {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .signup-link a {
+            color: #8a2be2;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                padding: 10px;
+            }
+            
+            #left {
+                flex: 0 0 200px;
+                height: auto;
+                width: 90%;
+                margin-top: 20px;
+            }
+            
+            #right {
+                padding: 1rem;
+            }
+            
+            #login-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body id="body">
+    <div id="left">
+        <div id="img">
+            <img id="imgs" src="float.jpg" alt="profile">
+        </div>
+    </div>
+    <div id="right">
+        <div id="login-card" class="card">
+            <div class="card-body">
+                <h2>Welcome Back</h2>
+                <p style="text-align: center; color: #666; margin-top: -1rem;">Sign in to your account</p>
+                
+                <div class="form-group">
+                    <input type="text" class="form-control" id="address" placeholder="Enter your address" name="Useraddress">
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="pswd">
+                </div>
+                
+                <button type="button" onclick="send()" id="button" class="btn btn-primary deep-purple btn-block">SIGN IN</button>
+                
+                <div id="btn" class="text-center"></div>
+                
+                <div class="signup-link">
+                    Don't have an account? <a href="signup.html">Sign up</a>
+                </div>
+            </div>
+        </div>  
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js"
+    integrity="sha512-oMd9Re3VgJcXuZJn9DN6X7S7JUc7xLYZ2UyZ85Mm/xzaW3lwBr4fV2zjuu/n5jY/Of/2JOx35CTa6zvQNxb31Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="config.js"></script> 
+    <script src="index.js"></script>
+</body>
+</html>
